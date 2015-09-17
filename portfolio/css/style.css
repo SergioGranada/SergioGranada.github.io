@@ -1,0 +1,45 @@
+p { 
+	font-size: 25px;	
+}
+
+#sugar {
+	font-size: 30px;
+	background-color: #FFCE85;
+	padding: 30px;
+	border: ridge 10px #FF9933;
+	margin: 10px;
+	border-radius: 10px;
+	font-family: Helvetica;
+}
+
+body {
+	padding: 50px 200px 50px 200px;
+	background-color: #FFC266;
+}
+
+h1 {
+	font-style: 20px;
+	font-family: Helvetica;
+	padding: 100px 200px 100px 200px;
+	
+}
+
+.external { 
+	padding: 30px;
+	background-color: #FFCE85;
+	border: ridge 10px #FF9933;
+	margin: 10px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 40px;
+	font-family: Arial;
+
+}
+
+img {
+	border: ridge 5px #FF9933;
+}
+
+a {
+	text-decoration: none;
+}
