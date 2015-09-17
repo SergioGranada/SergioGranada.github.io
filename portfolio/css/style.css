@@ -42,4 +42,10 @@ img {
 
 a {
 	text-decoration: none;
+	padding: 10px;
 }
+
+.things {
+	font-size: 20px;
+	font-family: Helvetica;
+ }
