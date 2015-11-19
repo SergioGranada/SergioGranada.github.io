@@ -1,0 +1,201 @@
+
+/*clearfix class */
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/*body styles*/
+
+body {
+	background-color: #f8fff7;
+	font-family: 'Josefin Sans', sans-serif;
+	line-height: 1em;
+}
+
+/*Media query which says when the screen 
+is at least 700px width, that's 700px or bigger, 
+make the background blue. */
+@media screen and (min-width: 700px) {
+	
+	body {
+		background-color: #f8fff7;
+	}
+}
+
+/*Navigation*/
+.portfolio-navigation {
+	height: 50px;
+	background-color: #201e1c;
+}
+
+.navigation-item {
+	display: inline-block;
+	
+}
+
+.navigation-menu{
+	text-align: center;
+	padding-top: 20px;
+}
+
+.navigation-link {
+	padding: 0 20px;
+	text-decoration: none;
+	color: #ffffff;
+	transition: color 0.5s;
+}
+.navigation-link:hover {
+	color: #b8b8b8;
+}
+
+.is-active{
+	border-bottom: 2px solid white;
+
+}
+/*Defining the container widths */
+
+/*Because we're designing for mobile first,
+we'll start off with a container width of 240px and 
+used media queries to increase the size */
+.main-container {
+	background-color: #92c14d;
+	width: auto;
+	height: auto;
+	margin: auto;
+}
+
+/*Home Page */
+
+.main-projects-preview {
+	margin: 0 auto;
+	width: 960px;
+	padding: 0;
+
+}
+
+.main-image-preview {
+	margin: 0 auto;
+	width: 960px;
+	display: inline-block;
+	float: left;
+	padding-bottom: 30px;
+	
+}
+
+/*about me*/
+
+.about-me {
+	width: 960px;
+	margin:0 auto;
+	padding: 20px 100px 20px 100px;
+}
+
+.about-me-description {
+	margin: 0 auto;
+	width: 960px;
+	
+}
+
+.titles {
+	font-size: 30px;
+	padding: 20px;
+}
+
+
+/*footer*/
+.footer-titles {
+	text-align: center;
+	font-size: 30px;
+	padding: 10px;
+}
+
+.contact-display {
+	margin: auto;
+	width: 380px;
+	display: inline-block;
+	float: left;
+	padding: 0 225px;
+}
+
+.social-media-display {
+	margin: auto;
+	width: 380px;
+	display: inline-block;
+	float: left;
+}
+
+.social-media-menu {
+	width: 40px;
+}
+
+.social-media-item {
+	width: 10px;
+	height: 10px;
+}
+
+/*footer-end*/
+
+.portfolio-list--fixed{
+	list-style-type: none;
+	margin: 0 auto;
+	width: 320px;
+	padding: 0;
+}
+
+@media (min-width: 768px) {
+	.portfolio-list--fixed {
+		width: 586px;
+	}
+	.project-video--fixed {
+		width: 253px;
+		height: auto;
+		float: left;
+		margin: 25px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.portfolio-list--fixed {
+		width: 984px;
+	}
+	.project-video--fixed {
+		width: 288px;
+		height: auto;
+	}	
+}
+
+.project-video--fixed {
+	width: 210px;
+	height: auto;
+	margin: 25px auto;
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
