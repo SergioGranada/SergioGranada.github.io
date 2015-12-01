@@ -12,7 +12,6 @@
 
 body {
 	background-color: #f8fff7;
-	font-family: 'Josefin Sans', sans-serif;
 	line-height: 1em;
 }
 
@@ -80,10 +79,7 @@ used media queries to increase the size */
 .main-image-preview {
 	margin: 0 auto;
 	width: 960px;
-	display: inline-block;
-	float: left;
-	padding-bottom: 30px;
-	
+	display: inline-block;	
 }
 
 /*about me*/
@@ -91,22 +87,46 @@ used media queries to increase the size */
 .about-me {
 	width: 960px;
 	margin:0 auto;
-	padding: 20px 100px 20px 100px;
+	padding: 20px 0px 20px;
+	background-color: #e2f0df
 }
 
 .about-me-description {
 	margin: 0 auto;
-	width: 960px;
+	width: 50%;
+	font-family: Georgia;
+	float: left;
+	padding: 5px 50px 5px 100px;
 	
 }
 
 .titles {
 	font-size: 30px;
-	padding: 20px;
+	padding: 20px 0px 20px;
+	font-family: Georgia bold;
+	margin: 0 auto;
+	width: 50%;
+}
+
+.portrait {
+	margin: 0 auto;
+	width: 20%;
+    background-color: #fff;
+    border-radius: 100%;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+
 }
 
 
 /*footer*/
+.footer{
+	margin: 0 auto;
+	width: 960px;
+	padding: 0;
+}
 .footer-titles {
 	text-align: center;
 	font-size: 30px;
@@ -115,27 +135,51 @@ used media queries to increase the size */
 
 .contact-display {
 	margin: auto;
-	width: 380px;
+	width: 50%;
 	display: inline-block;
 	float: left;
-	padding: 0 225px;
+	padding: 15px 0px;
+	
+}
+
+.contact-name {
+	width: 50%;
+	float:left;
+}
+
+.contact-address {
+	width: 50%;
+	float:left;
+}
+
+.contact-menu{
+	padding: 20px 10px 20px 10px;
+}
+
+.contact-item{
+	padding: 5px 0px;
 }
 
 .social-media-display {
 	margin: auto;
-	width: 380px;
+	width: 50%;
 	display: inline-block;
 	float: left;
+	padding: 15px 0px;
+
 }
 
 .social-media-menu {
-	width: 40px;
+	margin: auto;
 }
 
 .social-media-item {
-	width: 10px;
-	height: 10px;
+	width: 10%;
+	height: 10%;
+	float: left;
+	padding: 25px 20px;
 }
+
 
 /*footer-end*/
 
@@ -143,7 +187,7 @@ used media queries to increase the size */
 	list-style-type: none;
 	margin: 0 auto;
 	width: 320px;
-	padding: 0;
+	padding: 5px;
 }
 
 @media (min-width: 768px) {
@@ -174,15 +218,6 @@ used media queries to increase the size */
 	margin: 25px auto;
 	display: block;
 }
-
-
-
-
-
-
-
-
-
 
 
 
