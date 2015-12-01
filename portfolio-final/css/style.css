@@ -361,6 +361,19 @@ figure.slider figure figcaption {
   }
 }
 
+/*blog*/
+
+.blog-container {
+	width: 960px;
+	margin: 0 auto;
+	background-color: #e2f0df;
+	text-align: center;
+	font-family: Georgia;
+	font-size: 50px;
+	padding: 100px
+
+}
+
 /*footer*/
 .footer{
 	margin: 0 auto;
@@ -422,6 +435,8 @@ figure.slider figure figcaption {
 
 
 /*footer-end*/
+
+
 
 
 
