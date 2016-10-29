@@ -128,22 +128,25 @@
 					texture.format = THREE.RGBFormat;
 
 				// MATERIALS
-				var groundMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff, map: texture } );
+				var groundMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture } );
 				//var objectMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 50 } );
 				var objectMaterial = new THREE.MeshStandardMaterial( { color: 0xeeeff7, roughness: 0.5, metalness: 1.0 } );
 				//var material = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 50 } );
 
-				// GROUND
+				//VIDEOTEXTURE
 				var plane = new THREE.PlaneGeometry( 480, 204, 4, 4 );
 				mesh = new THREE.Mesh( plane, groundMaterial );
 				mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
 				scene.add( mesh );
-				mesh = new THREE.Mesh( plane, materialReflection );
+
+
+				/*mesh = new THREE.Mesh( plane, materialReflection );
 				mesh.position.y = -306;
 				mesh.rotation.x = - Math.PI;
 				mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
-				scene.add( mesh );
+				scene.add( mesh );*/
 
+				//GROUND
 				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2600, 2800, 2, 2 ), objectMaterial );
 				mesh.position.y = - 150;
 				mesh.rotation.x = - Math.PI / 2;
@@ -152,21 +155,28 @@
 
 
 				// OBJECTS
-				//var objectGeometry = new THREE.BoxGeometry( 0.5, 1, 1 );
+				var objectGeometry = new THREE.BoxGeometry( 40, 40, 40 );
 				//var objectGeometry = new THREE.SphereGeometry( 1.5, 16, 8 );
 
-				/*var objectGeometry = new THREE.TorusGeometry( 1.5, 0.4, 8, 16 );
-				for ( var i = 0; i < 5000; i ++ ) {
+				//var objectGeometry = new THREE.TorusGeometry( 1.5, 0.4, 8, 16 );
+				//for ( var i = 0; i < 5000; i ++ ) {
 					var mesh = new THREE.Mesh( objectGeometry, objectMaterial );
-					mesh.position.x = 400 * ( 0.5 - Math.random() );
-					mesh.position.y = 50 * ( 0.5 - Math.random() ) + 25;
-					mesh.position.z = 200 * ( 0.5 - Math.random() );
-					mesh.rotation.y = 3.14 * ( 0.5 - Math.random() );
-					mesh.rotation.x = 3.14 * ( 0.5 - Math.random() );
-					mesh.matrixAutoUpdate = false;
-					mesh.updateMatrix();
+					mesh.position.x = 350 ;
+					mesh.position.y = 10;
+					mesh.position.z = 150;
+					//mesh.rotation.y = 3.14 * ( 0.5 - Math.random() );
+					//mesh.rotation.x = 3.14 * ( 0.5 - Math.random() );
+					//mesh.matrixAutoUpdate = false;
+					//mesh.updateMatrix();
 					scene.add( mesh );
-				}*/
+				//}
+					var objectGeometry = new THREE.BoxGeometry( 40, 40, 40 );
+					var mesh = new THREE.Mesh( objectGeometry, objectMaterial );
+					mesh.position.x = -350 ;
+					mesh.position.y = 10;
+					mesh.position.z = 150;
+					scene.add( mesh );
+
 
 				// LIGHTS
 
