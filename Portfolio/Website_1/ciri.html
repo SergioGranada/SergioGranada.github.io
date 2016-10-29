@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - multiple elements with text</title>
+		<title>three.js webgl - lights - point lights</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <script src="assets/js/jquery.min.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/skel.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
@@ -18,18 +18,19 @@
     <script src="assets/js/Projector.js"></script>
 		<script src="assets/js/CanvasRenderer.js"></script>
 		<script src="assets/js/stats.min.js"></script>
+		<script src="assets/js/TrackballControls.js"></script>
 		<style>
-    body {
-      font-family: Monospace;
-      background-color: #f0f0f0;
-      margin: 0px;
-      overflow: hidden;
-    }
+		body {
+			font-family: Monospace;
+			background-color: #f0f0f0;
+			margin: 0px;
+			overflow: hidden;
+		}
 		</style>
 	</head>
 	<body>
 
-    <header id="header" class="preview">
+		<header id="header" class="preview">
       <div class="inner">
         <div class="content">
           <h1>Radius</h1>
@@ -39,39 +40,47 @@
       </div>
     </header>
 
-
 		<video id="video" autoplay loop webkit-playsinline style="display:none">
 			<source src="texture/ciri.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-			<source src="texture/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
 		</video>
+
+		<div id="container"></div>
+
 		<script>
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 			var AMOUNT = 100;
 			var container, stats;
-			var camera, scene, renderer;
+			var camera, scene, renderer, controls,
+			particle1, particle2, particle4, particle4, particle5, particle6,
+			light1, light2, light3, light4, light5, light6;
 			var video, image, imageContext,
 			imageReflection, imageReflectionContext, imageReflectionGradient,
 			texture, textureReflection;
-			var mesh;
+			var FAR = 10000;
 			var mouseX = 0;
 			var mouseY = 0;
+			var mesh;
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
+			var clock = new THREE.Clock();
 			init();
 			animate();
 			function init() {
-				container = document.createElement( 'div' );
+				var container = document.getElementById( 'container' );
+
+				//INFO
 				document.body.appendChild( container );
 				var info = document.createElement( 'div' );
 				info.style.position = 'absolute';
 				info.style.top = '10px';
 				info.style.width = '100%';
 				info.style.textAlign = 'center';
-				container.appendChild( info );
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+
+				// CAMERA
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, FAR );
 				camera.position.z = 1000;
-				scene = new THREE.Scene();
-				video = document.getElementById( 'video' );
-				//
+
+				//IMAGE
 				image = document.createElement( 'canvas' );
 				image.width = 480;
 				image.height = 204;
@@ -91,44 +100,116 @@
 				imageReflectionGradient.addColorStop( 1, 'rgba(240, 240, 240, 0.8)' );
 				textureReflection = new THREE.Texture( imageReflection );
 				var materialReflection = new THREE.MeshBasicMaterial( { map: textureReflection, side: THREE.BackSide, overdraw: 0.5 } );
-				//
+
+				// SCENE
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0x040306, 10, FAR );
+
+				//VIDEO
+				video = document.getElementById( 'video' );
+
+				// CONTROLS
+				controls = new THREE.TrackballControls( camera );
+				controls.rotateSpeed = 1.0;
+				controls.zoomSpeed = 1.2;
+				controls.panSpeed = 0.8;
+				controls.noZoom = false;
+				controls.noPan = false;
+				controls.staticMoving = false;
+				controls.dynamicDampingFactor = 0.15;
+				controls.keys = [ 65, 83, 68 ];
+
+				// TEXTURES
+					//var textureLoader = new THREE.TextureLoader();
+					//var texture = textureLoader.load( "images/carpet.jpg" );
+					var texture = new THREE.VideoTexture( video );
+					texture.minFilter = THREE.LinearFilter;
+					texture.magFilter = THREE.LinearFilter;
+					texture.format = THREE.RGBFormat;
+
+				// MATERIALS
+				var groundMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff, map: texture } );
+				//var objectMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 50 } );
+				var objectMaterial = new THREE.MeshStandardMaterial( { color: 0xeeeff7, roughness: 0.5, metalness: 1.0 } );
+				//var material = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 50 } );
+
+				// GROUND
 				var plane = new THREE.PlaneGeometry( 480, 204, 4, 4 );
-				mesh = new THREE.Mesh( plane, material );
+				mesh = new THREE.Mesh( plane, groundMaterial );
 				mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
-				scene.add(mesh);
+				scene.add( mesh );
 				mesh = new THREE.Mesh( plane, materialReflection );
 				mesh.position.y = -306;
 				mesh.rotation.x = - Math.PI;
 				mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
 				scene.add( mesh );
+
+				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2600, 2800, 2, 2 ), objectMaterial );
+				mesh.position.y = - 150;
+				mesh.rotation.x = - Math.PI / 2;
+				scene.add( mesh );
 				//
-				var separation = 150;
-				var amountx = 10;
-				var amounty = 10;
-				var PI2 = Math.PI * 2;
-				var material = new THREE.SpriteCanvasMaterial( {
-					color: 0x0808080,
-					program: function ( context ) {
-						context.beginPath();
-						context.arc( 0, 0, 0.5, 0, PI2, true );
-						context.fill();
-					}
-				} );
-				for ( var ix = 0; ix < amountx; ix++ ) {
-					for ( var iy = 0; iy < amounty; iy++ ) {
-						particle = new THREE.Sprite( material );
-						particle.position.x = ix * separation - ( ( amountx * separation ) / 2 );
-						particle.position.y = -153;
-						particle.position.z = iy * separation - ( ( amounty * separation ) / 2 );
-						particle.scale.x = particle.scale.y = 2;
-						scene.add( particle );
-					}
-				}
-				renderer = new THREE.CanvasRenderer();
-				renderer.setClearColor( 0xf0f0f0 );
+
+
+				// OBJECTS
+				//var objectGeometry = new THREE.BoxGeometry( 0.5, 1, 1 );
+				//var objectGeometry = new THREE.SphereGeometry( 1.5, 16, 8 );
+
+				/*var objectGeometry = new THREE.TorusGeometry( 1.5, 0.4, 8, 16 );
+				for ( var i = 0; i < 5000; i ++ ) {
+					var mesh = new THREE.Mesh( objectGeometry, objectMaterial );
+					mesh.position.x = 400 * ( 0.5 - Math.random() );
+					mesh.position.y = 50 * ( 0.5 - Math.random() ) + 25;
+					mesh.position.z = 200 * ( 0.5 - Math.random() );
+					mesh.rotation.y = 3.14 * ( 0.5 - Math.random() );
+					mesh.rotation.x = 3.14 * ( 0.5 - Math.random() );
+					mesh.matrixAutoUpdate = false;
+					mesh.updateMatrix();
+					scene.add( mesh );
+				}*/
+
+				// LIGHTS
+
+				var intensity = 2.5;
+				var distance = 800;
+				var decay = 1.0;
+				var c1 = 0x92cdcf, c2 = 0x455979, c3 = 0xeeeff7, c4 = 0xeeeff7, c5 = 0xeeeff7, c6 = 0xeeeff7;
+				var sphere = new THREE.SphereGeometry( 0.1, 0.1, 8 );
+				light1 = new THREE.PointLight( c1, intensity, distance, decay );
+				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c1 } ) ) );
+				scene.add( light1 );
+				light2 = new THREE.PointLight( c2, intensity, distance, decay );
+				light2.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c2 } ) ) );
+				scene.add( light2 );
+				/*light3 = new THREE.PointLight( c3, intensity, distance, decay );
+				light3.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c3 } ) ) );
+				scene.add( light3 );
+				light4 = new THREE.PointLight( c4, intensity, distance, decay );
+				light4.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c4 } ) ) );
+				scene.add( light4 );
+				light5 = new THREE.PointLight( c5, intensity, distance, decay );
+				light5.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c5 } ) ) );
+				scene.add( light5 );
+				light6 = new THREE.PointLight( c6, intensity, distance, decay );
+				light6.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c6 } ) ) );
+				scene.add( light6 );*/
+				var dlight = new THREE.DirectionalLight( 0xffffff, 0.05 );
+				dlight.position.set( 0.5, 1, 0 ).normalize();
+				scene.add( dlight );
+
+
+				// RENDERER
+
+				renderer = new THREE.WebGLRenderer( { antialias: false } );
+				renderer.setClearColor( scene.fog.color );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+
+				// STATS
+
 				stats = new Stats();
 				container.appendChild( stats.dom );
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -142,6 +223,7 @@
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
+
 			function onDocumentMouseMove( event ) {
 				mouseX = ( event.clientX - windowHalfX );
 				mouseY = ( event.clientY - windowHalfY ) * 0.2;
@@ -152,24 +234,43 @@
 				render();
 				stats.update();
 			}
+
 			function render() {
-				camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-				camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+				camera.position.x += ( mouseX - camera.position.x ) * 0.0009;
+				camera.position.y += ( - mouseY - camera.position.y ) * 0.0009;
 				camera.lookAt( scene.position );
 				if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
 					imageContext.drawImage( video, 0, 0 );
 					if ( texture ) texture.needsUpdate = true;
 					if ( textureReflection ) textureReflection.needsUpdate = true;
 				}
-				imageReflectionContext.drawImage( image, 0, 0 );
-				imageReflectionContext.fillStyle = imageReflectionGradient;
-				imageReflectionContext.fillRect( 0, 0, 480, 204 );
+				var time = Date.now() * 0.00025;
+				var z = 20, d = 150;
+				light1.position.x = 400
+				light1.position.z = 400
+				light1.position.y = 350
+				light2.position.x = -400
+				light2.position.z = 400
+				light2.position.y = 350
+				/*light3.position.x = 400
+				light3.position.z = 400
+				light3.position.y = 150
+				light4.position.x = -400
+				light4.position.z = 400
+				light4.position.y = 150
+				light5.position.x = 400
+				light5.position.z = 600
+				light5.position.y = 150
+				light6.position.x = -400
+				light6.position.z = 600
+				light6.position.y = 150*/
+				//controls.update( clock.getDelta() );
 				renderer.render( scene, camera );
 			}
+
 		</script>
 
-
-    <footer id="footer">
+		<footer id="footer">
       <a href="#" class="info fa fa-info-circle"><span>About</span></a>
       <div class="inner">
         <div class="content">
@@ -188,6 +289,5 @@
         </div>
       </div>
     </footer>
-
 	</body>
 </html>
