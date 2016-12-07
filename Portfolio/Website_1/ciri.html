@@ -247,8 +247,8 @@
 			}
 
 			function render() {
-				camera.position.x += ( mouseX - camera.position.x ) * 0.0009;
-				camera.position.y += ( - mouseY - camera.position.y ) * 0.0009;
+				camera.position.x += ( mouseX - camera.position.x ) * 0.005;
+				camera.position.y += ( - mouseY - camera.position.y ) * 0.005;
 				camera.lookAt( scene.position );
 				if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
 					imageContext.drawImage( video, 0, 0 );

@@ -22,7 +22,64 @@
 					<div class="content">
 						<h1>Welcome</h1>
 						<h2>Thank you for visiting! Just click on the images to explore more</h2>
-						<a href="#" class="button big alt"><span>Let's Go</span>
+						<a href="#" class="button big alt" onclick="clicksound1.playclip()"><span>Let's Go</span>
+
+						<!--
+							<script>
+  							function play(){
+       					var audio = document.getElementById("audio");
+       					audio.play();
+                 }
+   					 	</script>
+
+									<audio id="audio"
+									src="audio/Futureswoosh.mp3">
+									</audio>
+						-->
+
+						<script>
+
+							var html5_audiotypes={
+									"mp3": "audio/mpeg",
+									"mp4": "audio/mp4",
+									"ogg": "audio/ogg",
+									"wav": "audio/wav"
+								}
+
+									function createsoundbite(sound){
+										var html5audio=document.createElement('audio')
+										if (html5audio.canPlayType){
+											for (var i=0; i<arguments.length; i++){
+													var sourceel=document.createElement('source')
+													sourceel.setAttribute('src', arguments[i])
+
+													if (arguments[i].match(/\.(\w+)$/i))
+													sourceel.setAttribute('type', html5_audiotypes[RegExp.$1])
+													html5audio.appendChild(sourceel)
+												}
+
+													html5audio.load()
+													html5audio.playclip=function(){
+													html5audio.pause()
+													html5audio.currentTime=0
+													html5audio.play()
+												}
+												return html5audio
+												}
+
+												else{
+													return {playclip:function(){throw new Error("Your browser doesn't support HTML5 audio unfortunately")}}
+												}
+											}
+
+												var mouseoversound1=createsoundbite("audio/Highfastswoosh.mp3")
+												var clicksound1=createsoundbite("audio/Futureswoosh.mp3")
+												var clicksound2=createsoundbite("audio/Quick_Impact_01.wav")
+
+
+
+						</script>
+
 						</a>
 					</div>
 					<a href="#" class="button hidden"><span>Let's Go</span></a>
@@ -36,23 +93,23 @@
 
 						<!-- Column 1 (horizontal, vertical, horizontal, vertical) -->
 							<div class="image fit">
-								<a href="ciri.html"><img src="images/animation.jpg" alt="" /></a>
+								<a href="ciri.html"><img src="images/animation.jpg" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 
 							<div class="image fit">
-								<a href="desintegration.html"><img src="images/vfx.jpg" alt="" /></a>
+								<a href="desintegration.html"><img src="images/vfx.jpg" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 							<div class="image fit">
-								<a href="breakdance.html"><img src="images/mg.jpg" alt="" /></a>
+								<a href="breakdance.html"><img src="images/mg.jpg" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 							<div class="image fit">
-								<a href="moviehistory.html"><img src="images/moviehistory.png" alt="" /></a>
+								<a href="moviehistory.html"><img src="images/moviehistory.png" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 							<div class="image fit">
-								<a href="sound.html"><img src="images/sound.png" alt="" /></a>
+								<a href="sound.html"><img src="images/sound.png" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 							<div class="image fit">
-								<a href="car.html"><img src="images/car.png" alt="" /></a>
+								<a href="car.html"><img src="images/car.png" alt="" onmouseover="mouseoversound1.playclip()"/></a>
 							</div>
 
 
@@ -62,7 +119,9 @@
 
 		<!-- Footer -->
 			<footer id="footer">
-				<a href="#" class="info fa fa-info-circle"><span>About</span></a>
+				<a href="#" class="info fa fa-info-circle" onclick="clicksound2.playclip()"><span>About</span></a>
+
+
 				<div class="inner">
 					<div class="content">
 						<h3>Sergio Granada</h3>
